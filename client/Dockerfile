@@ -1,10 +1,14 @@
 # Build stage
-FROM node:alpine as build
+FROM node:alpine AS build
 
 WORKDIR /app
 COPY package.json ./
 RUN npm install
 COPY . .
+ENV BROWSER=none
+ENV NODE_OPTIONS=--require=/app/mock-localstorage.js
+# ENV CI=true
+
 RUN npm run build
 
 # Production stage
